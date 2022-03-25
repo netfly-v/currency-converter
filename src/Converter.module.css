@@ -1,0 +1,14 @@
+.title {
+    font-size: 24px;
+}
+
+.currencyField {
+    padding-top: 20px;
+}
+
+.changeButton {
+    margin-top: 20px;
+    border: none;
+    background-color: transparent;
+    cursor: pointer;
+}
