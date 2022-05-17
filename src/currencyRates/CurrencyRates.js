@@ -1,5 +1,3 @@
-import axios from 'axios';
-import { useEffect, useState } from 'react';
 import styles from './CurrencyRates.module.css';
 
 export const CurrencyRates = ({ rate }) => {

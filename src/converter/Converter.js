@@ -1,4 +1,5 @@
 import { useEffect, useState, useCallback } from 'react';
+import { DIRECTION } from '../consts/consts';
 import styles from './Converter.module.css';
 
 const SelectRate = ({ direction, rate, amount, select, changeAmount, updateSelect }) => (
@@ -31,25 +32,23 @@ const SelectRate = ({ direction, rate, amount, select, changeAmount, updateSelec
   </div>
 );
 
-const DIRECTION = {
-  FROM: 'from',
-  TO: 'to',
-};
-
 export const Converter = ({ rate }) => {
   const [amount, setAmount] = useState(0);
   const [convertedAmount, setConvertedAmount] = useState(0);
   const [selectFrom, setSelectFrom] = useState(rate[0].cc);
   const [selectTo, setSelectTo] = useState(rate[0].cc);
 
-  const changeAmount = useCallback(value => {
-    setAmount(value);
-    const rateFrom = rate.find(el => el.cc === selectFrom).rate;
-    const rateTo = rate.find(el => el.cc === selectTo).rate;
-    const result = (rateFrom / rateTo) * value;
-    setConvertedAmount(result);
-  }, [rate, selectFrom, selectTo]);
-  
+  const changeAmount = useCallback(
+    value => {
+      setAmount(value);
+      const rateFrom = rate.find(el => el.cc === selectFrom).rate;
+      const rateTo = rate.find(el => el.cc === selectTo).rate;
+      const result = (rateFrom / rateTo) * value;
+      setConvertedAmount(result);
+    },
+    [rate, selectFrom, selectTo]
+  );
+
   useEffect(() => {
     changeAmount(amount);
   }, [amount, changeAmount]);
