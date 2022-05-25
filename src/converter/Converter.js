@@ -1,12 +1,15 @@
 import { useEffect, useState, useCallback } from 'react';
 import { DIRECTION } from '../consts/consts';
+import { Header } from '../header/Header';
 import styles from './Converter.module.css';
 
 const SelectRate = ({ direction, rate, amount, select, changeAmount, updateSelect }) => (
   <div className={styles.currencyField}>
+    <span className={styles.direction}>{direction === DIRECTION.FROM ? 'Отдаете' : 'Получаете' }</span>
     <input
       type="textarea"
       name={`currencyInput_${direction}`}
+      className={styles.rateInput}
       value={amount}
       onChange={({ target }) => {
         if (direction === DIRECTION.FROM) {
@@ -60,6 +63,7 @@ export const Converter = ({ rate }) => {
 
   return (
     <div className={styles.converter}>
+      <Header rate={rate}/>
       <div className={styles.title}>Выберите валюты:</div>
       <>
         <SelectRate

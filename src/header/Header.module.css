@@ -1,0 +1,11 @@
+.header {
+  min-height: 30px;
+  display: flex;
+  justify-content: space-evenly;
+  margin-bottom: 10px;
+}
+
+.rate {
+  margin-left: 5px;
+  color: orangered;
+}

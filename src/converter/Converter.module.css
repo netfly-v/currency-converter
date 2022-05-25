@@ -1,9 +1,16 @@
+.converter {
+    margin-bottom: 30px;
+}
+
 .title {
     font-size: 24px;
 }
 
 .currencyField {
     padding-top: 20px;
+    display: flex;
+    align-items: center;
+    justify-content: center;
 }
 
 .changeButton {
@@ -11,4 +18,13 @@
     border: none;
     background-color: transparent;
     cursor: pointer;
+}
+
+.rateInput {
+    margin-right: 15px;
+}
+
+.direction {
+    text-align: left;
+    width: 100px;
 }

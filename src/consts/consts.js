@@ -1,7 +1,7 @@
 export const PATH = {
-  CONVERTER: '/converter',
-  HOME: '/',
-  RATES: '/rates',
+  CONVERTER: '/currency-converter/converter',
+  HOME: '/currency-converter/',
+  RATES: '/currency-converter/rates',
 };
 
 export const DIRECTION = {

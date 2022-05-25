@@ -1,8 +1,10 @@
+import { Header } from '../header/Header';
 import styles from './CurrencyRates.module.css';
 
 export const CurrencyRates = ({ rate }) => {
   return (
     <div>
+      <Header rate={rate} />
       {rate.length ? (
         <table>
           <thead>
