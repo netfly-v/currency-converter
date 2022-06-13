@@ -3,8 +3,3 @@ export const PATH = {
   HOME: '/currency-converter/',
   RATES: '/currency-converter/rates',
 };
-
-export const DIRECTION = {
-  FROM: 'from',
-  TO: 'to',
-};

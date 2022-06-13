@@ -1,7 +1,11 @@
 import { Header } from '../header/Header';
-import styles from './CurrencyRates.module.css';
+import { IRate } from '../types/types';
 
-export const CurrencyRates = ({ rate }) => {
+interface CurrencyRatesProps {
+  rate: IRate[]
+}
+
+export const CurrencyRates = ({ rate }: CurrencyRatesProps) => {
   return (
     <div>
       <Header rate={rate} />

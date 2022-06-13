@@ -1,20 +1,34 @@
 import { useEffect, useState, useCallback } from 'react';
-import { DIRECTION } from '../consts/consts';
 import { Header } from '../header/Header';
+import { Direction, IRate } from '../types/types';
+import { getRateByCc } from '../utils/utils';
 import styles from './Converter.module.css';
 
-const SelectRate = ({ direction, rate, amount, select, changeAmount, updateSelect }) => (
+interface ConverterProps {
+  rate: IRate[];
+}
+
+interface SelectRateProps {
+  direction: Direction;
+  rate: IRate[];
+  amount: number;
+  select: string;
+  changeAmount?: (value: number) => void;
+  updateSelect: (value: string) => void;
+}
+
+const SelectRate = ({ direction, rate, amount, select, changeAmount, updateSelect }: SelectRateProps) => (
   <div className={styles.currencyField}>
-    <span className={styles.direction}>{direction === DIRECTION.FROM ? 'Отдаете' : 'Получаете' }</span>
+    <span className={styles.direction}>{direction === Direction.From ? 'Отдаете' : 'Получаете'}</span>
     <input
       type="textarea"
       name={`currencyInput_${direction}`}
       className={styles.rateInput}
       value={amount}
       onChange={({ target }) => {
-        if (direction === DIRECTION.FROM) {
+        if (direction === Direction.From) {
           if (/^\d*\.?\d*$/.test(target.value)) {
-            changeAmount(target.value);
+            changeAmount && changeAmount(parseInt(target.value, 10));
           }
         }
       }}
@@ -35,18 +49,18 @@ const SelectRate = ({ direction, rate, amount, select, changeAmount, updateSelec
   </div>
 );
 
-export const Converter = ({ rate }) => {
+export const Converter = ({ rate }: ConverterProps) => {
   const [amount, setAmount] = useState(0);
   const [convertedAmount, setConvertedAmount] = useState(0);
   const [selectFrom, setSelectFrom] = useState(rate[0].cc);
   const [selectTo, setSelectTo] = useState(rate[0].cc);
 
   const changeAmount = useCallback(
-    value => {
+    (value: number) => {
       setAmount(value);
-      const rateFrom = rate.find(el => el.cc === selectFrom).rate;
-      const rateTo = rate.find(el => el.cc === selectTo).rate;
-      const result = (rateFrom / rateTo) * value;
+      const rateFrom = getRateByCc(rate, selectFrom);
+      const rateTo = getRateByCc(rate, selectTo);
+      const result = rateFrom && rateTo ? (rateFrom / rateTo) * value : 0;
       setConvertedAmount(result);
     },
     [rate, selectFrom, selectTo]
@@ -63,23 +77,23 @@ export const Converter = ({ rate }) => {
 
   return (
     <div className={styles.converter}>
-      <Header rate={rate}/>
+      <Header rate={rate} />
       <div className={styles.title}>Выберите валюты:</div>
       <>
         <SelectRate
           rate={rate}
-          direction={DIRECTION.FROM}
+          direction={Direction.From}
           amount={amount}
           select={selectFrom}
           changeAmount={changeAmount}
           updateSelect={setSelectFrom}
         />
         <button className={styles.changeButton} onClick={swapCurrency}>
-          <img src="https://finance.liga.net/design/images/icons/converter-min-arr.png" />
+          <img src="https://finance.liga.net/design/images/icons/converter-min-arr.png" alt="converter img" />
         </button>
         <SelectRate
           rate={rate}
-          direction={DIRECTION.TO}
+          direction={Direction.To}
           amount={convertedAmount}
           select={selectTo}
           updateSelect={setSelectTo}
